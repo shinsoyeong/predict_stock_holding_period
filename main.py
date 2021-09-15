@@ -30,9 +30,9 @@ transformer.fit(bnc_hist_norm)
 bnc_hist_norm = transformer.transform(bnc_hist_norm)
 
 bnc_hist_norm = pd.DataFrame(bnc_hist_norm)
-bnc_hist_norm.columns=(['bnc_qty', 'tot_aet_amt', 'stk_par_pr'])
+bnc_hist_norm.columns=(['bnc_qty', 'tot_aet_amt', 'stk_par_pr']) #컬럼에 레이블명 지정
 print(bnc_hist_norm)
 
-#정규화한 컬럼을 기존 DataFrame과 결합
+#정규화한 컬럼을 기존 DataFrame과 수평 결합
 stk_bnc_hist = pd.concat([stk_bnc_hist, bnc_hist_norm], axis=1)
 print(stk_bnc_hist)
