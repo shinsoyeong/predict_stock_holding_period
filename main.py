@@ -1,11 +1,11 @@
-import pandas as pd
+import pandas as pd                     # 데이터를 로드하기 위한 라이브러리
 import numpy as np
-from matplotlib import pyplot as plt
-from sklearn import preprocessing
+from matplotlib import pyplot as plt    # plotting 하기 위한 라이브러리
+from sklearn import preprocessing       # 데이터를 전처리하기 위한 라이브러리
 import sys, os
 sys.path.append(os.pardir)
 from sklearn.preprocessing import *
-
+  
 
 ''' csv 파일을 load 해서 numpy 배열로 바꿔주는 함수 '''
 def load_CSV(data):
@@ -14,11 +14,13 @@ def load_CSV(data):
     data2 = data1.to_numpy()
     return data2
 
-cus_info = pd.read_csv('cus_info.csv')
-iem_info = pd.read_csv('iem_info_20210902.csv')
-stk_bnc_hist = pd.read_csv('stk_bnc_hist.csv')
-stk_hld_train = pd.read_csv('stk_hld_train.csv')
-stk_hld_test = pd.read_csv('stk_hld_test.csv')
+''' 각 파일의 이름 변수에 data 로드 '''
+cus_info=load_CSV('cus_info.csv')              # 고객 및 주거래 계좌 정보
+iem_info=load_CSV('iem_info_20210902.csv')     # 종목 정보 _주식 종목에 대한 코드 정보
+stk_bnc_hist=load_CSV('stk_bnc_hist.csv')      # 국내 주식 잔고 이력 _일별 종목 잔고수량 및 금액, 액면가 정보
+stk_hld_test=load_CSV('stk_hld_test.csv')      # 국내 주식 보유 기간(train) _고객에게 제공되는 과거 국내주식 보유기간 데이터 (681,472건)
+stk_hld_train=load_CSV('stk_hld_train.csv')    # 국내 주식 보유 기간(test) _개발한 알고리즘 검증을 위한 문제지 (70,596건)
+
 
 #정규화할 컬럼 추출
 bnc_hist_norm = stk_bnc_hist[['bnc_qty', 'tot_aet_amt', 'stk_par_pr']]
