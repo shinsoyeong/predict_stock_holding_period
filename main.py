@@ -1,5 +1,6 @@
 import pandas as pd  # 데이터를 로드하기 위한 라이브러리
 import numpy as np
+import tensorflow as tf
 from matplotlib import pyplot as plt  # plotting 하기 위한 라이브러리
 from sklearn import preprocessing  # 데이터를 전처리하기 위한 라이브러리
 import sys, os
@@ -12,6 +13,8 @@ def load_CSV(file):
     data = []
     data = pd.read_csv(file)
     return data
+
+
 
 ''' 각 파일의 이름 변수에 data 로드 '''
 cus_info = load_CSV('cus_info.csv')  # 고객 및 주거래 계좌 정보
@@ -31,9 +34,21 @@ transformer.fit(bnc_hist_norm)
 bnc_hist_norm = transformer.transform(bnc_hist_norm)
 
 bnc_hist_norm = pd.DataFrame(bnc_hist_norm)
-bnc_hist_norm.columns = (['bnc_qty', 'tot_aet_amt', 'stk_par_pr'])  # 컬럼에 레이블명 지정
+bnc_hist_norm.columns = (['bnc_qty', 'tot_aet_amt', 'stk_par_pr'])# 컬럼에 레이블명 지정
 print(bnc_hist_norm)
 
 # 정규화한 컬럼을 기존 DataFrame과 수평 결합
 stk_bnc_hist = pd.concat([stk_bnc_hist, bnc_hist_norm], axis=1)
 print(stk_bnc_hist)
+
+stk_bnc_train = pd.concat([cus_info, stk_hld_train, stk_bnc_hist], axis=1)
+#계좌ID를 기준으로 train data를 결합
+stk_hld_test = pd.concat([cus_info, stk_hld_test], axis=1)
+#계좌ID를 기준으로 test data를 결합
+
+
+
+
+batch_size = 1000 #대량의 data를 처리하기 위한 mini batch
+
+#시발어케짜지...........
